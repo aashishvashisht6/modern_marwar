@@ -1,0 +1,77 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:discount_name",
+ "creation": "2024-03-30 18:35:42.763026",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_qhxg",
+  "discount_name",
+  "column_break_keyo",
+  "discount_account",
+  "section_break_jzlv",
+  "discount_days"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_qhxg",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "discount_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Discount Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "section_break_jzlv",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "discount_days",
+   "fieldtype": "Table",
+   "label": "Discount Days",
+   "options": "Discount Slab Days",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_keyo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "discount_account",
+   "fieldtype": "Link",
+   "label": "Discount Account",
+   "options": "Account",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-03-31 17:17:08.568064",
+ "modified_by": "Administrator",
+ "module": "Modern Marwar Erp",
+ "name": "Additional Discount Slabs",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

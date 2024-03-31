@@ -122,13 +122,11 @@ app_license = "mit"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Payment Entry": {
+		"on_submit":"modern_marwar_erp.docevents.payment_entry.on_submit"
+	}
+}
 
 # Scheduled Tasks
 # ---------------
@@ -226,4 +224,15 @@ app_license = "mit"
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
+
+fixtures = [
+    {"dt": "Custom Field","name":["in",
+                                [
+                                    "Customer-custom_discount_applicable",
+                                    "Sales Invoice-custom_discount_applicable",
+                                    "Sales Invoice-custom_additional_discount_slab"
+                                ]
+                                ]
+    }
+]
 
