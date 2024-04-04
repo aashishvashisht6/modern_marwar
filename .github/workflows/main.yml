@@ -17,7 +17,5 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
-          cd frappe-bench15/apps/modern_marwar_erp
-          git pull origin develop
-          bench migrate
-          bench restart
+          cd ci
+          ./modern_marwar.sh
