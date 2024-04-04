@@ -60,15 +60,15 @@ def get_data(filters):
             si.name AS invoice_number,
             pr.allocated_amount AS adjustment_amt,
             DATEDIFF(pe.posting_date, si.posting_date) AS tax_slab_days,
-            ROUND((pr.allocated_amount * COALESCE(ds.discount, 0)) / 100, 2) AS discount_amt,
-            ROUND(COALESCE(ds.discount, 0), 2) AS discount_rate
+            jea.debit_in_account_currency AS discount_amt,
+            ROUND((jea.debit_in_account_currency / pr.allocated_amount) * 100, 2) AS discount_rate
         FROM `tabPayment Entry Reference` pr  
         INNER JOIN `tabPayment Entry` pe ON pe.name = pr.parent and pe.docstatus = 1 
         INNER JOIN `tabSales Invoice` si ON si.name = pr.reference_name
         INNER JOIN `tabJournal Entry` je ON je.custom_payment_entry = pe.name AND je.docstatus = 1
-        LEFT JOIN `tabDiscount Slab Days` ds ON ds.parent = si.custom_additional_discount_slab
-            AND ds.days = DATEDIFF(pe.posting_date, si.posting_date)
+        INNER JOIN `tabJournal Entry Account` jea ON jea.parent = je.name
         WHERE pe.name IS NOT NULL {conditions} 
+        GROUP BY pe.name
     """, as_dict=True)
     
     return data
