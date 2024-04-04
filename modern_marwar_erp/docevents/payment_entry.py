@@ -1,5 +1,6 @@
 import frappe
-from frappe.utils import date_diff, flt
+from frappe.utils import date_diff, flt 
+from frappe import _
 
 def on_submit(doc, event=None):
     if doc.get('references') and doc.get("party_type") == "Customer" and doc.get("payment_type") == "Receive": 
@@ -11,6 +12,7 @@ def on_submit(doc, event=None):
                                               "posting_date"], as_dict=1)
                 
                 if si_doc.custom_discount_applicable:
+                    reference_name = document.get("reference_name")
                     dateDiff = date_diff(doc.posting_date, si_doc.posting_date)
                     discount_per = frappe.db.get_value("Discount Slab Days",filters={"parent": si_doc.custom_additional_discount_slab,
                                                                       "days": dateDiff},fieldname="discount")
@@ -68,5 +70,38 @@ def on_submit(doc, event=None):
                                         "company": doc.company,
                                         "accounts": accounts
                                     })
+                        je_doc.custom_payment_entry = doc.name
                         je_doc.save(ignore_permissions=True)
-                        je_doc.submit()
+                        je_doc.submit()  
+                        frappe.msgprint(
+                        _("Additional Discount {0} adjusted against {1}").format(discount_amount,reference_name),
+                        indicator="green",
+                        alert=True,
+                    )
+                        
+                        
+def validate(doc, event=None):
+    if doc.get('references') and doc.get("party_type") == "Customer" and doc.get("payment_type") == "Receive": 
+            
+        for document in doc.get("references"): 
+            if document.get("reference_doctype") == "Sales Invoice":
+                si_doc = frappe.db.get_value("Sales Invoice", document.get('reference_name'), 
+                                             ["custom_discount_applicable","custom_additional_discount_slab",
+                                              "posting_date"], as_dict=1)
+                
+                if si_doc.custom_discount_applicable:
+                    reference_name = document.get("reference_name")
+                    
+                    dateDiff = date_diff(doc.posting_date, si_doc.posting_date)
+                    
+                    discount_per = frappe.db.get_value("Discount Slab Days",filters={"parent": si_doc.custom_additional_discount_slab,
+                                                                      "days": dateDiff},fieldname="discount")
+                    
+                    discount_amount = (flt(document.get('allocated_amount')) * flt(discount_per)) /100
+                    
+                    if discount_amount > 0:
+                        frappe.msgprint(
+                        _("Additional Discount {0} is applicable on {1}").format(discount_amount,reference_name),
+                        indicator="green",
+                        alert=True,
+                    )

@@ -124,7 +124,8 @@ app_license = "mit"
 
 doc_events = {
 	"Payment Entry": {
-		"on_submit":"modern_marwar_erp.docevents.payment_entry.on_submit"
+		"on_submit":"modern_marwar_erp.docevents.payment_entry.on_submit",
+        "validate":"modern_marwar_erp.docevents.payment_entry.validate"
 	}
 }
 
@@ -230,7 +231,8 @@ fixtures = [
                                 [
                                     "Customer-custom_discount_applicable",
                                     "Sales Invoice-custom_discount_applicable",
-                                    "Sales Invoice-custom_additional_discount_slab"
+                                    "Sales Invoice-custom_additional_discount_slab",
+                                    "Journal Entry-custom_payment_entry"
                                 ]
                                 ]
     }
