@@ -82,8 +82,9 @@ def on_submit(doc, event=None):
                         
 def validate(doc, event=None):
     if doc.get('references') and doc.get("party_type") == "Customer" and doc.get("payment_type") == "Receive": 
-            
-        for document in doc.get("references"): 
+        doc_references = doc.get("references")
+        doc.references = []
+        for document in doc_references: 
             if document.get("reference_doctype") == "Sales Invoice":
                 si_doc = frappe.db.get_value("Sales Invoice", document.get('reference_name'), 
                                              ["custom_discount_applicable","custom_additional_discount_slab",
@@ -93,11 +94,14 @@ def validate(doc, event=None):
                     reference_name = document.get("reference_name")
                     
                     dateDiff = date_diff(doc.posting_date, si_doc.posting_date)
+
                     
                     discount_per = frappe.db.get_value("Discount Slab Days",filters={"parent": si_doc.custom_additional_discount_slab,
                                                                       "days": dateDiff},fieldname="discount")
                     
                     discount_amount = (flt(document.get('allocated_amount')) * flt(discount_per)) /100
+                    
+                    document.update({"custom_discount_amount": discount_amount})
                     
                     if discount_amount > 0:
                         frappe.msgprint(
@@ -105,3 +109,4 @@ def validate(doc, event=None):
                         indicator="green",
                         alert=True,
                     )
+            doc.append("references", document)

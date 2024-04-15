@@ -232,7 +232,8 @@ fixtures = [
                                     "Customer-custom_discount_applicable",
                                     "Sales Invoice-custom_discount_applicable",
                                     "Sales Invoice-custom_additional_discount_slab",
-                                    "Journal Entry-custom_payment_entry"
+                                    "Journal Entry-custom_payment_entry",
+                                    "Payment Entry Reference-custom_discount_amount"
                                 ]
                                 ]
     }
