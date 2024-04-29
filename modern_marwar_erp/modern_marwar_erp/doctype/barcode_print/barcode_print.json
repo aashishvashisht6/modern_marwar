@@ -6,6 +6,7 @@
  "engine": "InnoDB",
  "field_order": [
   "item_code",
+  "item_name",
   "colour",
   "brand",
   "readymade",
@@ -13,6 +14,7 @@
   "category",
   "rate",
   "size",
+  "meter",
   "batch"
  ],
  "fields": [
@@ -39,16 +41,18 @@
   {
    "fieldname": "readymade",
    "fieldtype": "Data",
-   "label": "Readymade"
+   "label": "Fabric"
   },
   {
    "fieldname": "column_break_srgw",
    "fieldtype": "Column Break"
   },
   {
+   "fetch_from": "item_code.item_group",
    "fieldname": "category",
-   "fieldtype": "Data",
-   "label": "Category"
+   "fieldtype": "Link",
+   "label": "Category",
+   "options": "Item Group"
   },
   {
    "fieldname": "rate",
@@ -65,11 +69,23 @@
    "fieldtype": "Link",
    "label": "Batch",
    "options": "Batch"
+  },
+  {
+   "fieldname": "meter",
+   "fieldtype": "Data",
+   "label": "Meter"
+  },
+  {
+   "fetch_from": "item_code.item_name",
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "label": "Item Name",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-04-26 14:25:50.225485",
+ "modified": "2024-04-30 01:14:48.520446",
  "modified_by": "Administrator",
  "module": "Modern Marwar Erp",
  "name": "Barcode Print",
