@@ -3,7 +3,9 @@
 
 frappe.ui.form.on("Barcode Print", {
     item_code(frm) {
+
         if (frm.doc.item_code) {
+            frm.set_trigger("set_queries")
             frappe.db.get_doc("Item", frm.doc.item_code).then(resp => {
                 const color_row = resp?.attributes?.filter(row => row.attribute === "Colour" || row.attribute === "Color")
                 if (color_row.length > 0) {
@@ -12,6 +14,18 @@ frappe.ui.form.on("Barcode Print", {
             })
 
         }
+    },
+    set_queries: frm => {
+        if (frm.doc.item_code) {
+            frm.set_query("batch", () => {
+                return {
+                    filters: {
+                        item: frm.doc.item_code
+                    }
+                }
+            })
+        }
+
     },
     size: frm => {
         if (frm.doc.size) {
@@ -28,5 +42,9 @@ frappe.ui.form.on("Barcode Print", {
         else {
             frm.set_df_property("size", "hidden", 0)
         }
+    },
+    refresh: frm => {
+        frm.trigger("set_queries")
     }
+
 });
