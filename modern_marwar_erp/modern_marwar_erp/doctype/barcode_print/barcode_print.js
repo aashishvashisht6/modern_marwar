@@ -5,7 +5,7 @@ frappe.ui.form.on("Barcode Print", {
     item_code(frm) {
 
         if (frm.doc.item_code) {
-            frm.set_trigger("set_queries")
+            frm.trigger("set_queries")
             frappe.db.get_doc("Item", frm.doc.item_code).then(resp => {
                 const color_row = resp?.attributes?.filter(row => row.attribute === "Colour" || row.attribute === "Color")
                 if (color_row.length > 0) {
