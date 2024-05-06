@@ -126,7 +126,10 @@ doc_events = {
 	"Payment Entry": {
 		"on_submit":"modern_marwar_erp.docevents.payment_entry.on_submit",
         "validate":"modern_marwar_erp.docevents.payment_entry.validate"
-	}
+	},
+    "Sales Invoice": {
+        "before_update_after_submit": "modern_marwar_erp.docevents.sales_invoice.before_update_after_submit"
+    }
 }
 
 # Scheduled Tasks
@@ -227,7 +230,7 @@ doc_events = {
 # }
 
 fixtures = [
-    {"dt": "Custom Field","name":["in",
+    {"dt": "Custom Field","filters":{"name": ["in",
                                 [
                                     "Customer-custom_discount_applicable",
                                     "Sales Invoice-custom_discount_applicable",
@@ -235,7 +238,31 @@ fixtures = [
                                     "Journal Entry-custom_payment_entry",
                                     "Payment Entry Reference-custom_discount_amount"
                                 ]
-                                ]
+                                ]}
+    },
+    {
+        "dt":"Property Setter","filters":{"name":["in",[
+            "Sales Taxes and Charges-item_wise_tax_detail-allow_on_submit",
+            "Sales Taxes and Charges-base_tax_amount_after_discount_amount-allow_on_submit",
+            "Sales Taxes and Charges-base_total-allow_on_submit",
+            "Sales Taxes and Charges-base_tax_amount-allow_on_submit",
+            "Sales Taxes and Charges-tax_amount_after_discount_amount-allow_on_submit",
+            "Sales Taxes and Charges-total-allow_on_submit",
+            "Sales Taxes and Charges-tax_amount-allow_on_submit",
+            "Sales Invoice Item-item_tax_rate-allow_on_submit",
+            "Sales Invoice Item-gst_treatment-allow_on_submit",
+            "Sales Invoice-rounded_total-allow_on_submit",
+            "Sales Invoice-base_in_words-allow_on_submit",
+            "Sales Invoice-in_words-allow_on_submit",
+            "Sales Invoice-base_rounded_total-allow_on_submit",
+            "Sales Invoice-base_total_taxes_and_charges-allow_on_submit",
+            "Sales Invoice-grand_total-allow_on_submit",
+            "Sales Invoice-base_grand_total-allow_on_submit",
+            "Sales Invoice-total_taxes_and_charges-allow_on_submit",
+            "Sales Invoice-items-allow_on_submit",
+            "Sales Invoice Item-item_tax_template-allow_on_submit",
+
+        ]]}
     }
 ]
 
