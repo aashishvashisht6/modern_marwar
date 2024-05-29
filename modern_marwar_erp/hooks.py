@@ -261,6 +261,10 @@ fixtures = [
             "Sales Invoice-total_taxes_and_charges-allow_on_submit",
             "Sales Invoice-items-allow_on_submit",
             "Sales Invoice Item-item_tax_template-allow_on_submit",
+            "Sales Invoice-taxes-allow_on_submit",
+            "Sales Invoice-gst_category-allow_on_submit",
+            "Sales Invoice-taxes_and_charges-allow_on_submit",
+            "Sales Invoice-tax_category-allow_on_submit",
 
         ]]}
     }
